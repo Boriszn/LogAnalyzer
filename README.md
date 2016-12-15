@@ -8,6 +8,12 @@ Includes functions:
  - Real-Time data observing and updating;
 
 
+##Future/To-Do
+
+- Integration with CouchDB (InProgress)
+- End-To-End test (Protractor.NET)
+- Migration to Angular 2.0
+
 ##Stack
 
 Front-End
