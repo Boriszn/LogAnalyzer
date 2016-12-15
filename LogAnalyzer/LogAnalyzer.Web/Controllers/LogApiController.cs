@@ -13,6 +13,7 @@ namespace LogAnalyzer.Web.Controllers
 {
     public class LogApiController : ApiController
     {
+        private const int DefaultLogItemsCount = 50;
         private readonly MongoRepository mongoRepository;
 
         public LogApiController()
@@ -25,9 +26,9 @@ namespace LogAnalyzer.Web.Controllers
         [ResponseType(typeof(LogCollectionViewModel))]
         public IHttpActionResult GetAllCollections()
         {
-            var logCollections = mongoRepository.GetAllCollections(DateTime.Now.AddDays(-1), DateTime.Now);
-
-            return Ok(logCollections.Select(MongoMapper.Map));
+            return Ok(mongoRepository
+                .GetAllCollections(DateTime.Now.AddDays(-1), DateTime.Now)
+                .Select(MongoMapper.Map));
         }
 
         // GET api/{collectionName}
@@ -63,8 +64,9 @@ namespace LogAnalyzer.Web.Controllers
                 return NotFound();
             }
 
-            var mongoREsult = mongoRepository.GetLogsByQuery(collectionName, loadToId, query, loadFrom, loadTo, 50);
-            return Ok(mongoREsult.Select(MongoMapper.Map));
+            return Ok(mongoRepository
+                          .GetLogsByQuery(collectionName, loadToId, query, loadFrom, loadTo, DefaultLogItemsCount)
+                          .Select(MongoMapper.Map));
         }
 
         //GET api/{collectionName}
@@ -91,7 +93,7 @@ namespace LogAnalyzer.Web.Controllers
                 return NotFound();
             }
 
-            return Ok(mongoRepository.GetNewItems(collectionName, loadFromId, query, loadFrom, loadTo, 50)
+            return Ok(mongoRepository.GetNewItems(collectionName, loadFromId, query, loadFrom, loadTo, DefaultLogItemsCount)
                                       .Select(MongoMapper.Map));
         }
 

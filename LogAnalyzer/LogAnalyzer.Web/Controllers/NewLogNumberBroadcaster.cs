@@ -42,7 +42,6 @@ namespace LogAnalyzer.Web.Controllers
         /// Update client/executes client lister 
         /// 'updateNumberOfNewItems' in new-logs-number-service.js
         /// </summary>
-        /// <param name="state">The state.</param>
         public void BroadcastNumbers(object state)
         {
             if (itemsViewModel.CollectionName != null)

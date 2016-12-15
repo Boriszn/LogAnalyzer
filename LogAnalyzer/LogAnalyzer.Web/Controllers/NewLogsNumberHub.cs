@@ -9,20 +9,20 @@ namespace LogAnalyzer.Web.Controllers
     /// </summary>
     public class NewLogsNumberHub : Hub
     {
-        private readonly NewLogNumberBroadcaster _newLogNumberBroadcaster;
+        private readonly NewLogNumberBroadcaster newLogNumberBroadcaster;
 
         public NewLogsNumberHub(): this(NewLogNumberBroadcaster.Instance) 
         { }
 
         public NewLogsNumberHub(NewLogNumberBroadcaster newLogNumberBroadcaster)
         {
-            _newLogNumberBroadcaster = newLogNumberBroadcaster;
+            this.newLogNumberBroadcaster = newLogNumberBroadcaster;
         }
 
         public void UpdateNumberOfNewItems(string collectionName, string loadFromId, string query = null,
             DateTime? loadFrom = null, DateTime? loadTo = null)
         {
-            _newLogNumberBroadcaster.UpdateModel(new NumberOfNewLogItemsViewModel
+            newLogNumberBroadcaster.UpdateModel(new NumberOfNewLogItemsViewModel
             {
                 CollectionName = collectionName,
                 LoadFromId = loadFromId,

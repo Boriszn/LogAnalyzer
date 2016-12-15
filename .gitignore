@@ -1,3 +1,9 @@
 LogAnalyzer/LogAnalyzer.Web/obj/
 LogAnalyzer/packages/
 LogAnalyzer/LogAnalyzer.Dal/obj/
+LogAnalyzer/LogAnalizer.Mappers/obj/
+LogAnalyzer/LogAnalizer.Mappers/bin/
+LogAnalyzer/LogAnalizer.Model/bin/
+LogAnalyzer/LogAnalizer.Model/obj/
+LogAnalyzer/LogAnalizer.UnitTests/obj/
+LogAnalyzer/LogAnalizer.UnitTests/bin/
