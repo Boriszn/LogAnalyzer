@@ -1,7 +1,0 @@
-C:\_Work\LogAnalyzer\LogAnalyzer\LogAnalyzer\LogAnalizer.Model\bin\Debug\LogAnalyzer.Model.dll
-C:\_Work\LogAnalyzer\LogAnalyzer\LogAnalyzer\LogAnalizer.Model\bin\Debug\LogAnalyzer.Model.pdb
-C:\_Work\LogAnalyzer\LogAnalyzer\LogAnalyzer\LogAnalizer.Model\bin\Debug\MongoDB.Bson.dll
-C:\_Work\LogAnalyzer\LogAnalyzer\LogAnalyzer\LogAnalizer.Model\bin\Debug\MongoDB.Bson.xml
-C:\_Work\LogAnalyzer\LogAnalyzer\LogAnalyzer\LogAnalizer.Model\obj\Debug\LogAnalyzer.Model.csprojResolveAssemblyReference.cache
-C:\_Work\LogAnalyzer\LogAnalyzer\LogAnalyzer\LogAnalizer.Model\obj\Debug\LogAnalyzer.Model.dll
-C:\_Work\LogAnalyzer\LogAnalyzer\LogAnalyzer\LogAnalizer.Model\obj\Debug\LogAnalyzer.Model.pdb
