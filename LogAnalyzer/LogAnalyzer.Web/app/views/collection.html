@@ -1,0 +1,295 @@
+﻿
+<div class="bg-light lter b-b wrapper-md">
+    <h1 class="m-n font-thin h3">Log collection <b ng-bind="LogCollectionName"></b></h1>
+</div>
+
+<div class="wrapper-md dnd-container" style="z-index: 20">
+   
+    <!-- form -->
+    <div class="row">
+        <div class="col-lg-9" style="width: 100%">
+            <div class="panel panel-default">
+                <div class="panel-heading font-bold">Collection query search</div>
+                <div class="panel-body">
+                    <div>
+                        <form class="form-inline" role="form">
+                            <div class="form-group" style="width: 100%;">
+                                    
+                                <p class="input-group">
+                                    <input class="form-control" style="width: 300px" id="Query" type="text" placeholder="Query" 
+                                           ng-model="Query">
+                                </p>
+                                                                
+                                <p class="input-group" style="width: 17%">
+                                    <input type="text" class="form-control" id="DateFrom" 
+                                           datepicker-popup="dd-MM-yyyy" 
+                                           ng-model="LoadFrom" 
+                                           is-open="fromOpened" 
+                                           max-date="{{today}}" 
+                                           close-text="Close" 
+                                           placeholder="From"
+                                           datepicker-options="dateOptions" />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="openFrom($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                    </span>
+                                </p>
+                                
+                                <p class="input-group" style="width: 10%" ng-show="LoadFrom">
+                                    <timepicker-pop input-time="TimeLoadFrom" class="input-group"  
+                                                    disabled="disabled"
+                                                    show-meridian='showMeridian'> 
+                                    </timepicker-pop>
+                                </p>
+                               
+                                <p class="input-group" style="width: 17%">
+                                    <input type="text" class="form-control" 
+                                           datepicker-popup="dd-MM-yyyy" 
+                                           ng-model="LoadTo"
+                                           is-open="toOpened" 
+                                           datepicker-options="dateOptions" max-date="{{today}}" 
+                                           close-text="Close" 
+                                           placeholder="To" />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="openTo($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                    </span>
+                                </p>
+                                
+                                <p class="input-group" style="width: 10%" ng-show="LoadTo">
+                                    <timepicker-pop input-time="TimeLoadTo" class="input-group" 
+                                                    disabled="disabled" show-meridian='showMeridian'>
+                                    </timepicker-pop>
+                                </p>
+
+                                <p class="input-group">
+                                    <button ng-click="search()" style="margin-left: 15px" class="btn btn-info">Search</button>
+                                </p>
+
+                            </div>
+                        </form>
+                    </div>
+
+                    <div style="margin-top: 6px; font-size: 15px;">
+                        Quick filters: 
+                        <span class="label label-danger"  style="cursor: pointer"  ng-click='quickFilterClick("Fatal")'>Fatals</span>
+                        <span class="label label-danger"  style="cursor: pointer"  ng-click='quickFilterClick("Error")'>Errors</span>
+                        <span class="label label-info"    style="cursor: pointer"  ng-click='quickFilterClick("Info")'>Infos</span>
+                        <span class="label label-warning" style="cursor: pointer"  ng-click='quickFilterClick("Warn")'>Warn</span>
+                        <span class="label label-primary" style="cursor: pointer"  ng-click='quickFilterClick("Debug")'>Debug</span>
+                        <span class="label label-primary" style="cursor: pointer"  ng-click='quickFilterClick("Trace")'>Trace</span>
+                        <span class="label label-default" style="cursor: pointer"  ng-click='quickFilterClick()'>All</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/ form -->
+
+    <div class="row" style="z-index: 20">
+        <div class="col-lg-12" ng-show="chartDataExists">
+            <div class="panel panel-default">
+                <div class="panel-heading font-bold">
+                    <a role="button" class="btn btn-xs btn-default" ng-click="showHideChart()" >
+                        <i class="glyphicon glyphicon-plus" ng-show="chartIsOpen == false" style="font-size: 10px; z-index: 20"></i>
+                        <i class="glyphicon glyphicon-minus" ng-show="chartIsOpen == true" style="font-size: 10px; z-index: 20"></i>
+                    </a>
+                    Errors chart. Between <span class="label bg-light" style="font-size: 13px;" ng-bind="chartLabelDateFrom"></span> 
+                    and <span class="label bg-light" style="font-size: 13px;" ng-bind="chartLabelDateTo"></span>
+                </div>
+                <div class="panel-body" style="padding: 1px;" ng-show="chartIsOpen == true">
+                    <div style="width: 100%; margin-top: 12px;" ng-show="chartDataExists">
+                        <highchart id="chart1" config="chartConfig" ></highchart>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- table with results -->
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Query search results
+            <span ng-show="logs.length > 0">
+                logs count <span class="label label-info" ng-bind="logs.length"></span>
+            </span>
+        </div>
+
+        <div class="panel-body">
+
+            <div cg-busy="{ 
+                promise:promise, 
+                message:message, 
+                backdrop:backdrop, 
+                delay:delay, 
+                minDuration:minDuration}">
+            </div>
+
+            <div class="alert alert-info alert-dismissible" role="alert" ng-hide="logs.length > 0">
+                <b>No data to display</b>
+            </div>
+            
+            <div class="table-responsive" ng-show="logs.length > 0">
+                <table class="table table-condensed table-striped table-hover">
+                    <tbody>
+                        <tr data-ng-repeat="item in logs" highlighter="item.EventDate">
+                            
+                            <td style="width: 3%;">
+                                <a role="button" class="btn btn-xs btn-default" ng-click="showHideDetail(item)" style="cursor: pointer" >
+                                    <i class="glyphicon glyphicon-plus" ng-show="item.IsVisible == false || !item.IsVisible" 
+                                       style="font-size: 10px;"></i>
+                                    <i class="glyphicon glyphicon-minus" ng-show="item.IsVisible == true" 
+                                        style="font-size: 10px;"></i>
+                                </a>
+                            </td>
+
+                            <td data-title="'EventDate'" style="cursor: pointer; width: 100px;"
+                                ng-hide="LogCollectionName == 'Nuts.UI.UserInfo'" ng-click="showHideDetail(item)" >
+                                <span class="label label-info col-md-offset-0" 
+                                    ng-bind="item.EventDate | date: 'dd-MM-yyyy HH:mm:ss'"></span>
+                            </td>
+
+                            <td data-title="'VisitDate'" style="width: 100px" ng-show="item.VisitDate" 
+                                ng-hide="LogCollectionName != 'Nuts.UI.UserInfo'" ng-click="showHideDetail(item)">
+                                <span class="label label-info col-md-offset-0" 
+                                    ng-bind="item.VisitDate | date: 'dd-MM-yyyy HH:mm:ss'"></span>
+                            </td>
+
+                            <td data-title="'Message'">
+                              
+                                <span ng-bind="item.Message | maxTextLength: 260" style="cursor: pointer"
+                                        ng-click="showHideDetail(item)" ng-hide="item.IsVisible"></span>
+
+                                <span class="col-md-offset-0" ng-bind="item.Name"></span>
+                                
+                                <!-- Detail infos container -->
+                                <div ng-show="item.IsVisible" class="detail-container">
+                                    
+                                    <div ng-bind="item.DetailItemModel.Message" style="overflow-x: auto; width: 100%;"></div>
+                                    <div class="line b-b line-lq pull-in"></div>
+
+                                    <accordion close-others="oneAtATime" ng-show="item.DetailItemModel.Exceptions">
+                                        <accordion-group is-open="exceptionStatus.open" class="b-info">
+                                            <accordion-heading>
+                                                Exceptions <i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': exceptionStatus.open, 'fa-angle-right': !exceptionStatus.open}"></i>
+                                            </accordion-heading>
+
+                                            <div ng-bind-html="item.DetailItemModel.Exceptions"></div>
+                                            
+                                        </accordion-group>
+                                    </accordion>
+                                    
+                                    <accordion close-others="oneAtATime" ng-show="item.DetailItemModel.Request">
+                                        <accordion-group is-open="status.open" class="b-info">
+                                            <accordion-heading>
+                                                Request <i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.open, 'fa-angle-right': !status.open}"></i>
+                                            </accordion-heading>
+                                            <div ng-bind-html="item.DetailItemModel.Request"></div>
+                                        </accordion-group>
+                                    </accordion>
+                                    
+                                    <accordion close-others="oneAtATime" ng-show="item.DetailItemModel.AdditionalInfo">
+                                        <accordion-group is-open="status.open" class="b-info">
+                                            <accordion-heading>
+                                                Additional info <i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.open, 'fa-angle-right': !status.open}"></i>
+                                            </accordion-heading>
+                                            <div ng-bind-html="item.DetailItemModel.AdditionalInfo"></div>
+                                        </accordion-group>
+                                    </accordion>
+                                    
+                                    <accordion close-others="oneAtATime" ng-show="item.DetailItemModel.VisitedPageName">
+                                        <accordion-group is-open="status.open" class="b-info">
+                                            <accordion-heading on-heading>
+                                                Visited Pages <i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.open, 'fa-angle-right': !status.open}"></i>
+                                            </accordion-heading>
+                                            <div ng-bind-html="item.DetailItemModel.VisitedPageName"></div>
+                                        </accordion-group>
+                                    </accordion>
+                                    
+                                    <accordion close-others="oneAtATime">
+                                        <accordion-group is-open="status.open" class="b-info">
+                                            <accordion-heading>
+                                                Info <i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': status.open, 'fa-angle-right': !status.open}"></i>
+                                            </accordion-heading>
+                                            
+                                            <div class="table-responsive">
+                                                <div ng-bind-html="item.DetailItemModel.Info"></div>
+                                            </div>
+
+                                        </accordion-group>
+                                    </accordion>
+                                    
+                                    
+                                    <div ng-bind-html="item.DetailItemModel.CustomObjectsData"></div>
+                                    
+                                </div>
+
+                            </td>
+
+                            <td data-title="'Level'" 
+                                 style="width: 70px; cursor: pointer" ng-click="showHideDetail(item)">
+                                <span class="label label-primary col-md-offset-0" ng-show="item.Level == 'Debug' || item.Level == 'Trace'" 
+                                      ng-bind="item.Level">
+                                </span>
+                                <span class="label label-info col-md-offset-0" ng-show="item.Level == 'Info'" 
+                                      ng-bind="item.Level">
+                                </span>
+                                <span class="label label-warning col-md-offset-0" ng-show="item.Level == 'Warn'" 
+                                      ng-bind="item.Level">
+                                </span>
+                                <span class="label label-danger col-md-offset-0" ng-show="item.Level == 'Error' || item.Level == 'Fatal'"
+                                      ng-bind="item.Level">
+                                </span>
+                                <span class="col-md-offset-0" 
+                                      ng-bind="item.Email"></span>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+    </div>
+    
+    <div class="alert alert-info alert-dismissible" role="alert" ng-show="IsNoDataToLoadMore">
+        <b>No data found to load more</b>
+    </div>
+
+    <div class="panel panel-default" style="padding-left: 25%;" ng-show="logs.length > 0"> 
+        <div class="panel-body">
+            <button ui-ladda="loading" style="width: 60%;" class="btn btn-info ladda-button" ng-click="loadMore()" 
+                    data-style="expand-right">Load more</button>
+        </div>
+    </div>
+
+</div>
+
+<!-- NewLogNumber 'circle' component -->
+<div>
+    <ul class="mfb-component--tr" ng-show="NewLogsNumber >= 0"  dnd-draggable = "true"  >  
+        <li class="mfb-component__wrap" ng-show="NewLogsNumber <= 9" 
+            dnd-draggable = "true" dnd-on-dragstart = "dragstart($dropmodel, $dragmodel)"
+            dnd-on-dragend = "dragend($dropmodel, $dragmodel)"  dnd-rect = "dragableRect">
+            <a class="mfb-component__button--main" ng-click="NewLogsNumberClick()" numberhighlighter="NewLogsNumber" >     
+                <span class="newlognuber newlognumber-onedigit"><b ng-bind="NewLogsNumber"></b></span>
+            </a>    
+        </li>
+    
+        <li class="mfb-component__wrap" ng-show="NewLogsNumber > 9 && NewLogsNumber < 100" 
+            dnd-draggable = "true" dnd-on-dragstart = "dragstart($dropmodel, $dragmodel)"
+            dnd-on-dragend = "dragend($dropmodel, $dragmodel)"  dnd-rect = "dragableRect" >    
+            <a class="mfb-component__button--main" ng-click="NewLogsNumberClick()" numberhighlighter="NewLogsNumber">     
+                <span class="newlognuber newlognumber-twodigit"><b ng-bind="NewLogsNumber"></b></span>
+            </a>    
+        </li>
+    
+        <li class="mfb-component__wrap" ng-show="NewLogsNumber >= 100" 
+            dnd-draggable = "true" dnd-on-dragstart = "dragstart($dropmodel, $dragmodel)"
+            dnd-on-dragend = "dragend($dropmodel, $dragmodel)"  dnd-rect = "dragableRect">    
+            <a class="mfb-component__button--main" ng-click="NewLogsNumberClick()" numberhighlighter="NewLogsNumber" >     
+                <span class="newlognuber newlognumber-thre-or-more-digit" 
+                      numberhighlighter="NewLogsNumber"><b ng-bind="NewLogsNumber"></b></span>
+            </a>    
+        </li>
+    </ul>
+</div>

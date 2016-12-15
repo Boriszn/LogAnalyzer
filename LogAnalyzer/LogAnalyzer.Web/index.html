@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html>
+<html lang="en" ng-app="LogMonitorApp">
+<head>
+    <title>LogMonitorTool</title>
+    <base href="/">
+    <link rel="stylesheet" href="/content/css/bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="/content/css/animate.css" type="text/css" />
+    <link rel="stylesheet" href="/content/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="/content/css/simple-line-icons.css" type="text/css" />
+    <link rel="stylesheet" href="/content/css/font.css" type="text/css" />
+    <link rel="stylesheet" href="/content/css/app.css" type="text/css" />
+    <link rel="stylesheet" href="/content/css/angular-busy.min.css" type="text/css" />
+    <link rel="stylesheet" href="/content/css/ladda-themeless.min.css"  />
+    <link rel="stylesheet" href="/content/css/angular-tooltips.css"  />
+    <link rel="stylesheet" href="/content/css/mfb.css"  />
+</head>
+
+<body ng-controller="MainController">
+
+    <div class="app" id="app" ng-class="{'app-header-fixed':app.settings.headerFixed, 
+                    'app-aside-fixed':app.settings.asideFixed, 
+                    'app-aside-folded':app.settings.asideFolded}">
+        
+        <!-- navbar header -->
+        <div class="bg-info dker app-header navbar">
+            <a href="#" class="navbar-brand text-lt">
+                <span>LogAnalyzer</span>
+                <span><b ng-bind="app.evironmentVersion" class="badge bg-info" style="font-size: 15px;"></b></span>
+            </a>
+        </div>
+        
+        <!-- menu -->
+        <div class="app-aside hidden-xs bg-light dker b-r">
+            <div class="aside-wrap">
+                <div class="navi-wrap">
+                    <nav class="navi" ng-controller="LeftMenuController">
+                        <div cg-busy="{ promise:promise, 
+                                        message:message, 
+                                        backdrop:backdrop, 
+                                        delay:delay, 
+                                        minDuration:minDuration }">
+                        </div>
+                        <ul class="nav" ng-show="collections">
+                            <li class="padder m-t m-b-sm text-muted text-xs">
+                                <span>Log collections</span>
+                            </li>
+                        </ul>
+                        <ul class="nav">
+                            <li ng-repeat="item in collections">
+
+                                <a class="auto" href="#/{{item.CollectionName}}" ng-click="collectionItemClick($event)"  
+                                    ng-show="item.CollectionName.length <= 18 && !item.ErrorsCount"
+                                    tooltips tooltip-title="{{item.ToolTip}}" tooltip-side="left" tooltip-speed="fast">
+                                    <b class="label bg-danger pull-right" ng-show="item.ErrorsCount > 0" 
+                                       ng-bind="item.ErrorsCount"></b>
+                                    <span style="width: 95px; display: inline-block;" 
+                                          ng-bind="item.CollectionName | maxTextLength: 22"></span>
+                                </a>
+
+                                <a class="auto" href="#/{{item.CollectionName}}" ng-click="collectionItemClick($event)" 
+                                     ng-show="item.CollectionName.length > 18 && !item.ErrorsCount" 
+                                   tooltips tooltip-title="{{item.ToolTip}}" tooltip-side="left" tooltip-speed="fast">
+                                    <b class="label bg-danger pull-right" ng-show="item.ErrorsCount > 0" 
+                                       ng-bind="item.ErrorsCount"></b>
+                                    <span style="width: 95px; display: inline-block;" 
+                                          ng-bind="item.CollectionName | maxTextLength: 22"></span>
+                                </a>
+                                
+                                <a class="auto" href="#/{{item.CollectionName}}" ng-click="collectionItemClick($event)"
+                                   tooltips tooltip-title="{{item.ToolTip}}"  tooltip-side="left" tooltip-speed="fast"
+                                   ng-show="item.CollectionName.length <= 18 && item.ErrorsCount">
+                                    <b class="label bg-danger pull-right" ng-show="item.ErrorsCount > 0" 
+                                       ng-bind="item.ErrorsCount"></b>
+                                    <span style="width: 95px; display: inline-block;" 
+                                          ng-bind=" item.CollectionName | maxTextLength: 17 "></span>
+                                </a>
+
+                                <a class="auto" href="#/{{item.CollectionName}}" ng-click="collectionItemClick($event)" 
+                                   tooltips tooltip-title="{{item.ToolTip}}" tooltip-side="left" tooltip-speed="fast"
+                                   ng-show="item.CollectionName.length > 18 && item.ErrorsCount">
+                                    <b class="label bg-danger pull-right" ng-show="item.ErrorsCount > 0" 
+                                       ng-bind="item.ErrorsCount"></b>
+                                    <span style="width: 95px; display: inline-block;" 
+                                          ng-bind="item.CollectionName | maxTextLength: 17 "></span>
+                                </a>
+
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        
+        <div class="app-content">
+            <div class="app-content-body fade-in-up" ng-view></div>
+        </div>
+
+    </div>
+    
+    <!-- js -->
+    <script src="/content/js/jquery.min.js"></script>
+    <script src="/content/js/jquery.signalR-2.2.0.min.js"></script>
+    
+    <script src="/content/js/angular.min.js"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular.min.js"></script>-->
+    <script src="/content/js/angular-route.min.js"></script>
+    <script src="/content/js/angular-animate.min.js"></script>
+    <script src="/content/js/ui-bootstrap-tpls.min.js"></script>
+    <script src="/content/js/angular-busy.min.js"></script>
+    <script src="/content/js/ajax-button/spin.min.js"></script>
+    <script src="/content/js/ajax-button/ladda.min.js"></script>
+    <script src="/content/js/moment.js"></script>
+    <script src="/content/js/angular-tooltips.js"></script>
+    <script src="/content/js/timepickerpop.js"></script>
+    <script src="/content/js/angular-dnd.min.js"></script>
+    <script src="/content/js/ngStorage.min.js"></script>
+    
+    <script src="/content/js/ng-stats.min.js"></script>
+
+    <script src="/content/js/highcharts-custom.js"></script>
+    <script src="/content/js/highcharts-ng.min.js"></script>
+    
+    <script src="/content/js/angular-sanitize.min.js"></script>
+
+    <!-- SignalR autogenerated proxy -->
+    <script src="/signalr/hubs"></script>
+
+    <!-- main App js -->
+    <script src="/app/app.js"></script>
+
+    <!--filters-->
+    <script src="/app/filters/text-length-filter.js"></script>
+
+    <!--directives-->
+    <script src="/app/directives/button-loader-directive.js"></script>
+    <script src="/app/directives/newdata-highlighter-directive.js"></script>
+    <script src="/app/directives/number-highlighter-directive.js"></script>
+    
+    <!--services-->
+    <script src="/app/services/log-monitor-service.js"></script>
+    <script src="/app/services/json-to-html-service.js"></script>
+    <script src="/app/services/log-item-service.js"></script>
+    <script src="/app/services/new-logs-number-service.js"></script>
+    <script src="/app/services/date-time-service.js"></script>
+    <script src="/app/services/errors-chart-service.js"></script>
+    
+    <!--controllers-->
+    <script src="/app/controllers/main-controller.js"></script>
+    <script src="/app/controllers/default-controller.js"></script>
+    <script src="/app/controllers/collection-controller.js"></script>
+    <script src="/app/controllers/left-menu-controller.js"></script>
+    
+</body>
+</html>
+
+
+
