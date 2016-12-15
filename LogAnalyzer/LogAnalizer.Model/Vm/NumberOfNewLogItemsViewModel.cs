@@ -1,6 +1,6 @@
 using System;
 
-namespace LogAnalyzer.Web.Models
+namespace LogAnalyzer.Model.Vm
 {
     public class NumberOfNewLogItemsViewModel
     {

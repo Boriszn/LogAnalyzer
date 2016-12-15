@@ -4,8 +4,8 @@ using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Description;
 using LogAnalyzer.Dal;
-using LogAnalyzer.Web.Mappers;
-using LogAnalyzer.Web.Models;
+using LogAnalyzer.Model.Vm;
+using LogAnalyzer.Mappers;
 using MongoDB.Bson;
 using MongoDB.Bson.IO;
 
@@ -25,8 +25,9 @@ namespace LogAnalyzer.Web.Controllers
         [ResponseType(typeof(LogCollectionViewModel))]
         public IHttpActionResult GetAllCollections()
         {
-            var mongoREsult = mongoRepository.GetAllCollections(DateTime.Now.AddDays(-1), DateTime.Now);
-            return Ok(mongoREsult.Select(MongoMapper.Map));
+            var logCollections = mongoRepository.GetAllCollections(DateTime.Now.AddDays(-1), DateTime.Now);
+
+            return Ok(logCollections.Select(MongoMapper.Map));
         }
 
         // GET api/{collectionName}

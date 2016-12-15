@@ -74,19 +74,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\EventStore\EventStoreCollectionInfo.cs" />
-    <Compile Include="Models\EventStore\EventStoreCollectionInfoEntry.cs" />
-    <Compile Include="Models\LogCollection.cs" />
-    <Compile Include="Models\LogEntry.cs" />
-    <Compile Include="Models\LogLevelInfo.cs" />
-    <Compile Include="Models\EventStore\MessageForCollection.cs" />
-    <Compile Include="MongoEventsRepository.cs" />
+    <Compile Include="IRepository.cs" />
     <Compile Include="MongoRepository.cs" />
-    <Compile Include="Models\EventStore\MongoSimpleEventMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LogAnalizer.Model\LogAnalyzer.Model.csproj">
+      <Project>{f98c0ed2-c800-4d8d-8d2a-f1fa98418ea9}</Project>
+      <Name>LogAnalyzer.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

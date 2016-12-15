@@ -1,5 +1,5 @@
 ﻿using System;
-using LogAnalyzer.Web.Models;
+using LogAnalyzer.Model.Vm;
 using Microsoft.AspNet.SignalR;
 
 namespace LogAnalyzer.Web.Controllers

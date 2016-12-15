@@ -1,7 +1,7 @@
 ﻿
-namespace LogAnalyzer.Web.Models
+namespace LogAnalyzer.Model.Dal
 {
-    public class LogLevelInfoViewModel
+    public class LogLevelInfo
     {
         public string Level { get; set; }
         public int Count { get; set; }

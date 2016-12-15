@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic;
-using LogAnalyzer.Dal.Models;
+using LogAnalyzer.Model.Dal;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
@@ -11,7 +11,8 @@ using MongoDB.Driver.Linq;
 
 namespace LogAnalyzer.Dal
 {
-    public class MongoRepository
+    [Obsolete("Used old mongo driver")]
+    public class MongoRepository : IRepository
     {
         private const string SystemCollection = "system.indexes";
         private const string LevelKey = "Level";
@@ -19,7 +20,7 @@ namespace LogAnalyzer.Dal
         private const string IdKey = "_id";
 
         private readonly MongoDatabase _database;
-        private readonly IMongoDatabase database;
+        //private readonly IMongoDatabase database;
 
         public MongoRepository()
         {
@@ -29,7 +30,7 @@ namespace LogAnalyzer.Dal
             var server = client.GetServer();
             _database = server.GetDatabase(new MongoUrl(connectionString).DatabaseName);
 
-            database = client.GetDatabase(new MongoUrl(connectionString).DatabaseName);
+            //database = client.GetDatabase(new MongoUrl(connectionString).DatabaseName);
         }
 
         public bool IsCollectionExists(string collectionName)
@@ -37,13 +38,14 @@ namespace LogAnalyzer.Dal
             return _database.CollectionExists(collectionName);
         }
 
+        
         public IEnumerable<LogCollection> GetAllCollections(DateTime from, DateTime to)
         {
             var result = new List<LogCollection>();
             var allCollections = _database.GetCollectionNames();
             
             //new mongo driver
-            var item = database.ListCollectionsAsync().Result.ToListAsync().Result;
+            //var item = database.ListCollectionsAsync().Result.ToListAsync().Result;
 
             //Notice: new ObjectId() func converts datetime to UTC by default
             var fromBsonId = new BsonObjectId(new ObjectId(from, 0, 0, 0));
@@ -58,37 +60,9 @@ namespace LogAnalyzer.Dal
 
                 var collection = _database.GetCollection<LogEntry>(collectionName);
 
-                var query = Query<LogEntry>.Where(r =>
-                            r.BsonObjectId >= fromBsonId &&
-                            r.BsonObjectId <= toBsonId);
-
-                var groupArgs = new GroupArgs
-                {
-                    Initial = new BsonDocument(new BsonElement(CountKey, new BsonInt32(0))),
-                    KeyFields = new GroupByBuilder(new[] { LevelKey }),
-                    ReduceFunction = new BsonJavaScript(string.Format("function ( curr, result ) {{ result.{0}++; }}", CountKey)),
-                    Query = query
-                };
-
-                var infos = collection.Group(groupArgs).ToList();
-                var logLevels = new List<LogLevelInfo>();
-
-                foreach (var info in infos)
-                {
-                    var levelValue = info.Elements.Single(r => r.Name == LevelKey).Value;
-                    var countValue = info.Elements.Single(r => r.Name == CountKey).Value;
-
-                    if (levelValue != null && levelValue != BsonNull.Value && countValue != null && countValue != BsonNull.Value)
-                    {
-                        logLevels.Add(new LogLevelInfo
-                        {
-                            Level = levelValue.AsString,
-                            Count = (int)countValue.AsDouble
-                        });
-                    }
-                }
-
-                logCollection.LastInfo = logLevels;
+                logCollection.LastInfo = GetLogLevels(collection
+                    .Group(BuildBsonQuery(fromBsonId, toBsonId))
+                    .ToList());
 
                 result.Add(logCollection);
             }
@@ -166,7 +140,6 @@ namespace LogAnalyzer.Dal
             return collection.ToList();
         }
 
-
         #region Private functions
 
         private IQueryable<LogEntry> ApplyConditions(IQueryable<LogEntry> collection, string query, DateTime? loadFrom, DateTime? loadTo)
@@ -205,6 +178,43 @@ namespace LogAnalyzer.Dal
             collection = collection.Where(r => r.BsonObjectId > fromBsonId);
 
             return ApplyConditions(collection, query, loadFrom, loadTo);
+        }
+
+        private static IEnumerable<LogLevelInfo> GetLogLevels(IEnumerable<BsonDocument> infos)
+        {
+            var logLevels = (infos.Select(
+                info => new { info, levelValue = info.Elements.Single(r => r.Name == LevelKey).Value })
+                                  .Select(
+                                      @t =>
+                                      new { @t, countValue = @t.info.Elements.Single(r => r.Name == CountKey).Value })
+                                  .Where(
+                                      @t =>
+                                      @t.@t.levelValue != null && @t.@t.levelValue != BsonNull.Value &&
+                                      @t.countValue != null && @t.countValue != BsonNull.Value)
+                                  .Select(@t => new LogLevelInfo
+                                  {
+                                      Level = @t.@t.levelValue.AsString,
+                                      Count = (int)@t.countValue.AsDouble
+                                  })).ToList();
+            return logLevels;
+        }
+
+        private GroupArgs BuildBsonQuery(BsonObjectId fromBsonId, BsonObjectId toBsonId)
+        {
+            var query = Query<LogEntry>.Where(r =>
+                                              r.BsonObjectId >= fromBsonId &&
+                                              r.BsonObjectId <= toBsonId);
+
+            var groupArgs = new GroupArgs
+            {
+                Initial = new BsonDocument(new BsonElement(CountKey, new BsonInt32(0))),
+                KeyFields = new GroupByBuilder(new[] { LevelKey }),
+                ReduceFunction = new BsonJavaScript(
+                    string.Format("function ( curr, result ) {{ result.{0}++; }}", CountKey)),
+                Query = query
+            };
+
+            return groupArgs;
         }
 
         #endregion

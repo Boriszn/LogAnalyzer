@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace LogAnalyzer.Web.Models
+namespace LogAnalyzer.Model.Vm
 {
     public class LogCollectionViewModel
     {

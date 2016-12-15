@@ -199,14 +199,6 @@
     <Compile Include="Controllers\LogApiController.cs" />
     <Compile Include="Controllers\NewLogNumberBroadcaster.cs" />
     <Compile Include="Controllers\NewLogsNumberHub.cs" />
-    <Compile Include="Mappers\MongoMapper.cs" />
-    <Compile Include="Models\EventStore\EventStoreCollectionInfo.cs" />
-    <Compile Include="Models\EventStore\EventStoreCollectionInfoEntry.cs" />
-    <Compile Include="Models\EventStore\MongoEventStoreMessage.cs" />
-    <Compile Include="Models\LogCollectionViewModel.cs" />
-    <Compile Include="Models\LogEntryViewModel.cs" />
-    <Compile Include="Models\LogLevelInfoViewModel.cs" />
-    <Compile Include="Models\NumberOfNewLogItemsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -214,6 +206,14 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\LogAnalizer.Mappers\LogAnalyzer.Mappers.csproj">
+      <Project>{d40e8882-9300-41eb-8a72-e00b0c480bc2}</Project>
+      <Name>LogAnalyzer.Mappers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LogAnalizer.Model\LogAnalyzer.Model.csproj">
+      <Project>{f98c0ed2-c800-4d8d-8d2a-f1fa98418ea9}</Project>
+      <Name>LogAnalyzer.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LogAnalyzer.Dal\LogAnalyzer.Dal.csproj">
       <Project>{0704d52f-69ee-4ecf-8504-211eafff3ed3}</Project>
       <Name>LogAnalyzer.Dal</Name>
@@ -258,6 +258,7 @@
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

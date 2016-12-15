@@ -1,0 +1,9 @@
+C:\_Work\LogAnalyzer\LogAnalyzer\LogAnalyzer\LogAnalizer.Mappers\bin\Debug\LogAnalyzer.Mappers.dll
+C:\_Work\LogAnalyzer\LogAnalyzer\LogAnalyzer\LogAnalizer.Mappers\bin\Debug\LogAnalyzer.Mappers.pdb
+C:\_Work\LogAnalyzer\LogAnalyzer\LogAnalyzer\LogAnalizer.Mappers\bin\Debug\LogAnalyzer.Model.dll
+C:\_Work\LogAnalyzer\LogAnalyzer\LogAnalyzer\LogAnalizer.Mappers\bin\Debug\MongoDB.Bson.dll
+C:\_Work\LogAnalyzer\LogAnalyzer\LogAnalyzer\LogAnalizer.Mappers\bin\Debug\LogAnalyzer.Model.pdb
+C:\_Work\LogAnalyzer\LogAnalyzer\LogAnalyzer\LogAnalizer.Mappers\bin\Debug\MongoDB.Bson.xml
+C:\_Work\LogAnalyzer\LogAnalyzer\LogAnalyzer\LogAnalizer.Mappers\obj\Debug\LogAnalyzer.Mappers.csprojResolveAssemblyReference.cache
+C:\_Work\LogAnalyzer\LogAnalyzer\LogAnalyzer\LogAnalizer.Mappers\obj\Debug\LogAnalyzer.Mappers.dll
+C:\_Work\LogAnalyzer\LogAnalyzer\LogAnalyzer\LogAnalizer.Mappers\obj\Debug\LogAnalyzer.Mappers.pdb

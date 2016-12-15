@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace LogAnalyzer.Dal.Models
+namespace LogAnalyzer.Model.Dal
 {
     public class LogCollection
     {

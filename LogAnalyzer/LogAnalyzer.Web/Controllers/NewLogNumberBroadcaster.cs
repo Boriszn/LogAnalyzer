@@ -1,26 +1,26 @@
 using System;
 using System.Threading;
 using LogAnalyzer.Dal;
-using LogAnalyzer.Web.Models;
+using LogAnalyzer.Model.Vm;
 using Microsoft.AspNet.SignalR;
 
 namespace LogAnalyzer.Web.Controllers
 {
     public class NewLogNumberBroadcaster
     {
-        private readonly static Lazy<NewLogNumberBroadcaster> instance = new Lazy<NewLogNumberBroadcaster>(
-            () => new NewLogNumberBroadcaster());
+        private static readonly Lazy<NewLogNumberBroadcaster> instance
+            = new Lazy<NewLogNumberBroadcaster>(() => new NewLogNumberBroadcaster());
 
-        //Create time interval for Timer with 10 seconds broadcasting
+        public static NewLogNumberBroadcaster Instance => instance.Value;
+
+        /// <summary>
+        /// Creates time interval for Timer with 10 seconds broadcasting
+        /// </summary>
         private readonly TimeSpan broadcastInterval = TimeSpan.FromSeconds(10);
         private Timer broadcastLoop;
         private readonly IHubContext hubContext;
         private NumberOfNewLogItemsViewModel itemsViewModel;
         private readonly MongoRepository mongoRepository;
-
-        public string Name => "Test";
-
-        public static NewLogNumberBroadcaster Instance => instance.Value;
 
         public NewLogNumberBroadcaster()
         {
@@ -38,6 +38,11 @@ namespace LogAnalyzer.Web.Controllers
                 broadcastInterval);
         }
 
+        /// <summary>
+        /// Update client/executes client lister 
+        /// 'updateNumberOfNewItems' in new-logs-number-service.js
+        /// </summary>
+        /// <param name="state">The state.</param>
         public void BroadcastNumbers(object state)
         {
             if (itemsViewModel.CollectionName != null)
