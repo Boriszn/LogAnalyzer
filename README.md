@@ -22,7 +22,7 @@ Front-End
  - HTML5/CSS-3, Jquery, 
 
 Back-End
-- .NETFramework 4.6, C#, WebAPI
+- .NETFramework 4.6, C#, WebAPI, Swagger
 - ASP.NET MVC 4
 - SignalR,
 

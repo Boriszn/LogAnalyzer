@@ -38,7 +38,6 @@ namespace LogAnalyzer.Dal
             return _database.CollectionExists(collectionName);
         }
 
-        
         public IEnumerable<LogCollection> GetAllCollections(DateTime from, DateTime to)
         {
             var result = new List<LogCollection>();
