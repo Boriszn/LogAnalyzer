@@ -1,26 +1,43 @@
 ﻿
+<style type="text/css">
+    
+</style>
 <div class="bg-light lter b-b wrapper-md">
     <h1 class="m-n font-thin h3">Log collection <b ng-bind="LogCollectionName"></b></h1>
 </div>
 
-<div class="wrapper-md dnd-container" style="z-index: 20">
-   
-    <!-- form -->
+<div class="wrapper-md dnd-container" >
+    
     <div class="row">
-        <div class="col-lg-9" style="width: 100%">
+        <div class="col-lg-9 search-form">
             <div class="panel panel-default">
-                <div class="panel-heading font-bold">Collection query search</div>
+                <div class="panel-heading font-bold">Collection search</div>
                 <div class="panel-body">
                     <div>
                         <form class="form-inline" role="form">
-                            <div class="form-group" style="width: 100%;">
-                                    
-                                <p class="input-group">
-                                    <input class="form-control" style="width: 300px" id="Query" type="text" placeholder="Query" 
+                            <div class="form-group search-form">
+                                
+                                <div class="btn-group" dropdown="" >
+                                    <button aria-expanded="false" aria-haspopup="true" type="button" class="btn btn-default dropdown-toggle" ng-disabled="disabled">
+                                        Filter <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a ng-click='quickFilterClick("Fatal")'><div class="text-danger font-bold">Fatals</div></a></li>
+                                        <li><a ng-click='quickFilterClick("Error")'><div class="text-danger font-bold">Errors</div></a></li>
+                                        <li><a ng-click='quickFilterClick("Info")'><div class="text-info font-bold">Infos</div></a></li>
+                                        <li><a ng-click='quickFilterClick("Warn")'><div class="text-warning font-bold">Warn</div></a></li>
+                                        <li><a ng-click='quickFilterClick("Debug")'><div class="text-muted font-bold">Debug</div></a></li>
+                                        <li><a ng-click='quickFilterClick("Trace")'><div class="text-success font-bold">Trace</div></a></li>
+                                        <li><a ng-click='quickFilterClick()'>All</a></li>
+                                    </ul>
+                                </div>
+
+                                <div class="input-group">
+                                    <input class="form-control query" id="Query" type="text" placeholder="Query" 
                                            ng-model="Query">
-                                </p>
+                                </div>
                                                                 
-                                <p class="input-group" style="width: 17%">
+                                <div class="input-group load-from">
                                     <input type="text" class="form-control" id="DateFrom" 
                                            datepicker-popup="dd-MM-yyyy" 
                                            ng-model="LoadFrom" 
@@ -32,16 +49,16 @@
                                     <span class="input-group-btn">
                                         <button type="button" class="btn btn-default" ng-click="openFrom($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                                     </span>
-                                </p>
+                                </div>
                                 
-                                <p class="input-group" style="width: 10%" ng-show="LoadFrom">
+                                <div class="input-group time-load" ng-show="LoadFrom">
                                     <timepicker-pop input-time="TimeLoadFrom" class="input-group"  
                                                     disabled="disabled"
                                                     show-meridian='showMeridian'> 
                                     </timepicker-pop>
-                                </p>
+                                </div>
                                
-                                <p class="input-group" style="width: 17%">
+                                <div class="input-group load-to">
                                     <input type="text" class="form-control" 
                                            datepicker-popup="dd-MM-yyyy" 
                                            ng-model="LoadTo"
@@ -50,54 +67,43 @@
                                            close-text="Close" 
                                            placeholder="To" />
                                     <span class="input-group-btn">
-                                        <button type="button" class="btn btn-default" ng-click="openTo($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        <button type="button" class="btn btn-default" ng-click="openTo($event)">
+                                            <i class="glyphicon glyphicon-calendar"></i>
+                                        </button>
                                     </span>
-                                </p>
+                                </div>
                                 
-                                <p class="input-group" style="width: 10%" ng-show="LoadTo">
+                                <div class="input-group time-load" ng-show="LoadTo">
                                     <timepicker-pop input-time="TimeLoadTo" class="input-group" 
                                                     disabled="disabled" show-meridian='showMeridian'>
                                     </timepicker-pop>
-                                </p>
+                                </div>
 
-                                <p class="input-group">
+                                <div class="input-group">
                                     <button ng-click="search()" style="margin-left: 15px" class="btn btn-info">Search</button>
-                                </p>
+                                </div>
 
                             </div>
                         </form>
                     </div>
-
-                    <div style="margin-top: 6px; font-size: 15px;">
-                        Quick filters: 
-                        <span class="label label-danger"  style="cursor: pointer"  ng-click='quickFilterClick("Fatal")'>Fatals</span>
-                        <span class="label label-danger"  style="cursor: pointer"  ng-click='quickFilterClick("Error")'>Errors</span>
-                        <span class="label label-info"    style="cursor: pointer"  ng-click='quickFilterClick("Info")'>Infos</span>
-                        <span class="label label-warning" style="cursor: pointer"  ng-click='quickFilterClick("Warn")'>Warn</span>
-                        <span class="label label-primary" style="cursor: pointer"  ng-click='quickFilterClick("Debug")'>Debug</span>
-                        <span class="label label-primary" style="cursor: pointer"  ng-click='quickFilterClick("Trace")'>Trace</span>
-                        <span class="label label-default" style="cursor: pointer"  ng-click='quickFilterClick()'>All</span>
-                    </div>
-
                 </div>
             </div>
         </div>
-    </div>
-    <!--/ form -->
+    </div>    
 
-    <div class="row" style="z-index: 20">
+    <div class="row">
         <div class="col-lg-12" ng-show="chartDataExists">
             <div class="panel panel-default">
                 <div class="panel-heading font-bold">
                     <a role="button" class="btn btn-xs btn-default" ng-click="showHideChart()" >
-                        <i class="glyphicon glyphicon-plus" ng-show="chartIsOpen == false" style="font-size: 10px; z-index: 20"></i>
-                        <i class="glyphicon glyphicon-minus" ng-show="chartIsOpen == true" style="font-size: 10px; z-index: 20"></i>
+                        <i class="glyphicon glyphicon-plus icon-plus-minus" ng-show="chartIsOpen == false"></i>
+                        <i class="glyphicon glyphicon-minus icon-plus-minus" ng-show="chartIsOpen == true"></i>
                     </a>
                     Errors chart. Between <span class="label bg-light" style="font-size: 13px;" ng-bind="chartLabelDateFrom"></span> 
                     and <span class="label bg-light" style="font-size: 13px;" ng-bind="chartLabelDateTo"></span>
                 </div>
-                <div class="panel-body" style="padding: 1px;" ng-show="chartIsOpen == true">
-                    <div style="width: 100%; margin-top: 12px;" ng-show="chartDataExists">
+                <div class="panel-body" ng-show="chartIsOpen == true">
+                    <div class="chart-wrap" ng-show="chartDataExists">
                         <highchart id="chart1" config="chartConfig" ></highchart>
                     </div>
                 </div>
@@ -108,7 +114,7 @@
     <!-- table with results -->
     <div class="panel panel-default">
         <div class="panel-heading">
-            Query search results
+            Search results
             <span ng-show="logs.length > 0">
                 logs count <span class="label label-info" ng-bind="logs.length"></span>
             </span>
@@ -138,26 +144,25 @@
                                     <i class="glyphicon glyphicon-plus" ng-show="item.IsVisible == false || !item.IsVisible" 
                                        style="font-size: 10px;"></i>
                                     <i class="glyphicon glyphicon-minus" ng-show="item.IsVisible == true" 
-                                        style="font-size: 10px;"></i>
+                                       style="font-size: 10px;"></i>
                                 </a>
                             </td>
 
                             <td data-title="'EventDate'" style="cursor: pointer; width: 100px;"
                                 ng-hide="LogCollectionName == 'Nuts.UI.UserInfo'" ng-click="showHideDetail(item)" >
-                                <span class="label label-info col-md-offset-0" 
-                                    ng-bind="item.EventDate | date: 'dd-MM-yyyy HH:mm:ss'"></span>
+                                <span class="label bg-light dk" ng-bind="item.EventDate | date: 'dd-MM-yyyy HH:mm:ss'">Light</span>
                             </td>
 
                             <td data-title="'VisitDate'" style="width: 100px" ng-show="item.VisitDate" 
                                 ng-hide="LogCollectionName != 'Nuts.UI.UserInfo'" ng-click="showHideDetail(item)">
                                 <span class="label label-info col-md-offset-0" 
-                                    ng-bind="item.VisitDate | date: 'dd-MM-yyyy HH:mm:ss'"></span>
+                                      ng-bind="item.VisitDate | date: 'dd-MM-yyyy HH:mm:ss'"></span>
                             </td>
 
                             <td data-title="'Message'">
                               
                                 <span ng-bind="item.Message | maxTextLength: 260" style="cursor: pointer"
-                                        ng-click="showHideDetail(item)" ng-hide="item.IsVisible"></span>
+                                      ng-click="showHideDetail(item)" ng-hide="item.IsVisible"></span>
 
                                 <span class="col-md-offset-0" ng-bind="item.Name"></span>
                                 
@@ -225,8 +230,7 @@
 
                             </td>
 
-                            <td data-title="'Level'" 
-                                 style="width: 70px; cursor: pointer" ng-click="showHideDetail(item)">
+                            <td class="show-hide-log-item" data-title="'Level'" ng-click="showHideDetail(item)">
                                 <span class="label label-primary col-md-offset-0" ng-show="item.Level == 'Debug' || item.Level == 'Trace'" 
                                       ng-bind="item.Level">
                                 </span>
@@ -255,10 +259,10 @@
         <b>No data found to load more</b>
     </div>
 
-    <div class="panel panel-default" style="padding-left: 25%;" ng-show="logs.length > 0"> 
+    <div class="load-more-panel panel panel-default" ng-show="logs.length > 0"> 
         <div class="panel-body">
-            <button ui-ladda="loading" style="width: 60%;" class="btn btn-info ladda-button" ng-click="loadMore()" 
-                    data-style="expand-right">Load more</button>
+            <button ui-ladda="loading" style="width: 60%;" class="btn btn-default ladda-button" ng-click="loadMore()" 
+                    data-style="expand-right"><i class="fa fa-sort-desc"></i>........<i class="fa fa-sort-desc"></i></button>
         </div>
     </div>
 

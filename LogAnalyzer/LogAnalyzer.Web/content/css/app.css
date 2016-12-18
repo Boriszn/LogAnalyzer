@@ -3952,3 +3952,42 @@ timepicker-pop table input {
 
 .dnd-container { 
 }
+
+.show-hide-log-item {
+    width: 70px;
+    cursor: pointer;
+}
+
+.load-more-panel {
+    padding-left: 25%;
+}
+
+.search-form {
+    width: 100%;
+}
+
+.icon-plus-minus {
+    font-size: 10px;
+    z-index: 20;
+}
+
+.load-from {
+    width: 17% !important;
+}
+
+.query {
+    width: 300px !important;
+}
+
+.time-load {
+    width: 10%;
+}
+
+.chart-wrap {
+    width: 100%;
+    margin-top: 12px;
+}
+
+.load-to {
+    width: 17%
+}
