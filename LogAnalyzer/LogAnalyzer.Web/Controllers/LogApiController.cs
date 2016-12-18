@@ -14,11 +14,11 @@ namespace LogAnalyzer.Web.Controllers
     public class LogApiController : ApiController
     {
         private const int DefaultLogItemsCount = 50;
-        private readonly MongoRepository mongoRepository;
+        private readonly IRepository mongoRepository;
 
-        public LogApiController()
+        public LogApiController(IRepository repository)
         {
-            mongoRepository = new MongoRepository();
+            mongoRepository = repository;
         }
 
         // GET api/collections

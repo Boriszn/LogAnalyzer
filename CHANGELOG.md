@@ -1,11 +1,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
-The format is based on [Keep a Changelog](http://keepachangelog.com/) 
+The format is based on [Keep a Changelog](http://keepachangelog.com/)
 
 ## unreleased - 18.12.2016
 
 ### Added
-- Unit tests content export 
+- Unit tests content export
+- Ninject IoC integration.
+-- Added injection to controller
 
 ### Fixed
 - Namespaces, naming conventions
@@ -19,7 +21,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 
 ### Added
 - UnitTests project
-- Project for ViewModel, DataAccess model classes 
+- Project for ViewModel, DataAccess model classes
 - Project for Data/Object Mapper  
 - Initialise project/move from BitBucked
 
