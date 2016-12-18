@@ -2,13 +2,15 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/) 
 
-## unreleased - 17.12.2016
+## unreleased - 18.12.2016
 
 ### Added
 - Unit tests content export 
 
 ### Fixed
 - Namespaces, naming conventions
+- Moving inline styles to app.css clases
+- UI improvements
 
 ## [1.0.0] - 15.12.2016
 
