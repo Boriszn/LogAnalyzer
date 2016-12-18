@@ -85,6 +85,18 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Web.Common, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.Common.3.2.3.0\lib\net45-full\Ninject.Web.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.WebApi.DependencyResolver, Version=0.1.4758.24814, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.WebApi.DependencyResolver.0.1.4758.24814\lib\net45\Ninject.WebApi.DependencyResolver.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Nuts.InterDom.Queue, Version=131.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Nuts.InterDom.Queue.0.131\lib\Nuts.InterDom.Queue.dll</HintPath>
       <Private>True</Private>
@@ -151,6 +163,7 @@
     <Content Include="app\services\new-logs-number-service.js" />
     <Content Include="app\services\log-item-service.js" />
     <Content Include="app\services\log-monitor-service.js" />
+    <Content Include="App_Readme\readme.txt" />
     <Content Include="content\js\angular-dnd.min.js" />
     <Content Include="content\js\angular-sanitize.min.js" />
     <Content Include="content\js\highcharts-custom.js" />
@@ -194,6 +207,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\LogApiController.cs" />
