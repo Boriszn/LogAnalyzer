@@ -97,10 +97,6 @@
       <HintPath>..\packages\Ninject.WebApi.DependencyResolver.0.1.4758.24814\lib\net45\Ninject.WebApi.DependencyResolver.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Nuts.InterDom.Queue, Version=131.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Nuts.InterDom.Queue.0.131\lib\Nuts.InterDom.Queue.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
