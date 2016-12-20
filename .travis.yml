@@ -1,2 +1,2 @@
 language: csharp
-solution: LogAnalyzer.sln
+solution: LogAnalyzer/LogAnalyzer.sln
