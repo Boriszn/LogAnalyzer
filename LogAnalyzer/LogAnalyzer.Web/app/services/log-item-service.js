@@ -190,13 +190,9 @@ app.factory('logItemsService', function (formsUtilService, $http, dateTimeServic
                         + '</div>';
 
                 } else {
-
-                    //debugger;
                 }
 
             });
-
-            
 
             return customObjectsData;
         },
