@@ -1,4 +1,4 @@
-# LogAnalyzer 
+# LogAnalyzer [![Build status](https://ci.appveyor.com/api/projects/status/q8yuymqhiibd39hw?svg=true)](https://ci.appveyor.com/project/Boriszn/loganalyzer)
 
 Solution provides opportunities for retrieving and analysing log data from NoSQL data bases (MongoDb, CouchDb).
 Includes functions: 
