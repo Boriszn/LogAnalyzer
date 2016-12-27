@@ -28,3 +28,5 @@ C:\_Work\LogAnalyzer\LogAnalyzer\LogAnalyzer\LogAnalizer.UnitTests\bin\Debug\Cas
 C:\_Work\LogAnalyzer\LogAnalyzer\LogAnalyzer\LogAnalizer.UnitTests\bin\Debug\Moq.dll
 C:\_Work\LogAnalyzer\LogAnalyzer\LogAnalyzer\LogAnalizer.UnitTests\bin\Debug\Castle.Core.xml
 C:\_Work\LogAnalyzer\LogAnalyzer\LogAnalyzer\LogAnalizer.UnitTests\bin\Debug\Moq.xml
+C:\_Work\LogAnalyzer\LogAnalyzer\LogAnalyzer\LogAnalizer.UnitTests\bin\Debug\Microsoft.DiaSymReader.Native.x86.dll
+C:\_Work\LogAnalyzer\LogAnalyzer\LogAnalyzer\LogAnalizer.UnitTests\bin\Debug\Microsoft.DiaSymReader.Native.amd64.dll
