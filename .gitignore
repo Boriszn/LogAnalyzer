@@ -8,3 +8,5 @@ LogAnalyzer/LogAnalizer.Model/obj/
 LogAnalyzer/LogAnalizer.UnitTests/obj/
 LogAnalyzer/LogAnalizer.UnitTests/bin/
 LogAnalyzer/LogAnalyzer.Web/bin/
+LogAnalyzer/LogAnalyzer.IntegrationTests/obj/
+LogAnalyzer/LogAnalyzer.IntegrationTests/bin/
