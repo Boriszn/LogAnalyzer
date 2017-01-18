@@ -8,6 +8,7 @@ using LogAnalyzer.Model.Vm;
 using LogAnalyzer.Mappers;
 using MongoDB.Bson;
 using MongoDB.Bson.IO;
+using Ninject.Extensions.Logging;
 
 namespace LogAnalyzer.Web.Controllers
 {
@@ -15,10 +16,12 @@ namespace LogAnalyzer.Web.Controllers
     {
         private const int DefaultLogItemsCount = 50;
         private readonly IRepository mongoRepository;
+        private readonly ILogger logger;
 
-        public LogApiController(IRepository repository)
+        public LogApiController(IRepository repository, ILogger logger)
         {
             mongoRepository = repository;
+            this.logger = logger;
         }
 
         // GET api/collections
