@@ -23,6 +23,8 @@
     <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -169,7 +171,6 @@
     <Content Include="app\services\new-logs-number-service.js" />
     <Content Include="app\services\log-item-service.js" />
     <Content Include="app\services\log-monitor-service.js" />
-    <Content Include="App_Readme\readme.txt" />
     <Content Include="content\js\angular-dnd.min.js" />
     <Content Include="content\js\angular-sanitize.min.js" />
     <Content Include="content\js\highcharts-custom.js" />

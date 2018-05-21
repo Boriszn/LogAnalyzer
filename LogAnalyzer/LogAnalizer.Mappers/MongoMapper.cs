@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using LogAnalyzer.Model.Dal;
-using LogAnalyzer.Model.Vm;
+using LogAnalyzer.Model.ViewModel;
 
 namespace LogAnalyzer.Mappers
 {

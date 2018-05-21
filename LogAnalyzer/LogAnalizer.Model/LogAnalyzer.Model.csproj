@@ -49,10 +49,10 @@
     <Compile Include="Dal\LogEntry.cs" />
     <Compile Include="Dal\LogLevelInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Vm\LogCollectionViewModel.cs" />
-    <Compile Include="Vm\LogEntryViewModel.cs" />
-    <Compile Include="Vm\LogLevelInfoViewModel.cs" />
-    <Compile Include="Vm\NumberOfNewLogItemsViewModel.cs" />
+    <Compile Include="ViewModel\LogCollectionViewModel.cs" />
+    <Compile Include="ViewModel\LogEntryViewModel.cs" />
+    <Compile Include="ViewModel\LogLevelInfoViewModel.cs" />
+    <Compile Include="ViewModel\NumberOfNewLogItemsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

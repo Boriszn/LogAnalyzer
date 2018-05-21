@@ -24,9 +24,7 @@ namespace LogAnalyzer.Dal
         public MongoRepositoryV2()
         {
             configurationProvider = new ConfigurationProvider();
-
-            database = new MongoClient(configurationProvider.ConnectionString)
-                .GetDatabase(new MongoUrl(configurationProvider.ConnectionString).DatabaseName);
+             database = new MongoClient(configurationProvider.ConnectionString).GetDatabase(configurationProvider.Database);
         }
 
         public bool IsCollectionExists(string collectionName)
@@ -45,7 +43,7 @@ namespace LogAnalyzer.Dal
             foreach (var collectionItem in allCollections.Where(r => r != SystemCollection))
             {
                 string collectionName = collectionItem["name"].ToString();
-                var mongoCollection = database.GetCollection<LogEntry>(collectionName);
+                IMongoCollection<LogEntry> mongoCollection = database.GetCollection<LogEntry>(collectionName);
 
                 result.Add( new LogCollection
                     {
@@ -94,7 +92,7 @@ namespace LogAnalyzer.Dal
 
         public int GetNumberOfNewItems(string collectionName, string loadFromId, string query, DateTime? loadFrom, DateTime? loadTo)
         {
-            var collection = GetNewItemsCollection(collectionName, loadFromId, query, loadFrom, loadTo);
+            IQueryable<LogEntry> collection = GetNewItemsCollection(collectionName, loadFromId, query, loadFrom, loadTo);
 
             return collection.Count();
         }
@@ -108,38 +106,9 @@ namespace LogAnalyzer.Dal
         public IEnumerable<LogEntry> GetErrors(string collectionName, DateTime? loadFrom, DateTime? loadTo)
         {
             //TODO: temp solution, should be used Agregation framework
-           // var collection = _database.GetCollection<LogEntry>(collectionName).AsQueryable();
+            IMongoCollection<LogEntry> mongoCollection = database.GetCollection<LogEntry>(collectionName);
 
-           /* var command = new CommandDocument
-            {
-                {"aggregate", collectionName},
-                {
-                    "pipeline",
-                    new BsonArray
-                    {
-                        new BsonDocument
-                        {
-                            {
-                                "$match",
-                                new BsonDocument
-                                {
-                                    { "Level", "Error" }
-                                }
-                            }
-                        }
-                    }
-                }
-
-            };
-            
-            var result = _database.RunCommand(command);
-            var document = result.Response["result"].AsBsonArray.Select(v => v.AsBsonDocument);*/
-
-            //collection = ApplyConditions(collection, "Level == \"Error\"", loadFrom, loadTo); 
-
-            //return collection.ToList();
-
-            throw new NotImplementedException();
+            return mongoCollection.Find(_ => _.Level.Contains("Error")).ToList();
         }
 
         #region Private functions
@@ -177,52 +146,12 @@ namespace LogAnalyzer.Dal
 
         private IQueryable<LogEntry> GetNewItemsCollection(string collectionName, string loadFromId, string query, DateTime? loadFrom, DateTime? loadTo)
         {
-            /*
-            var collection = _database.GetCollection<LogEntry>(collectionName).AsQueryable();
+            var collection = database.GetCollection<LogEntry>(collectionName).AsQueryable();
 
             var fromBsonId = new BsonObjectId(new ObjectId(loadFromId));
             collection = collection.Where(r => r.BsonObjectId > fromBsonId);
 
             return ApplyConditions(collection, query, loadFrom, loadTo);
-             */
-            throw new NotImplementedException();
-        }
-
-        private static IEnumerable<LogLevelInfo> GetLogLevels(IEnumerable<BsonDocument> infos)
-        {
-            var logLevels = (infos.Select(
-                info => new { info, levelValue = info.Elements.Single(r => r.Name == LevelKey).Value })
-                                  .Select(
-                                      @t =>
-                                      new { @t, countValue = @t.info.Elements.Single(r => r.Name == CountKey).Value })
-                                  .Where(
-                                      @t =>
-                                      @t.@t.levelValue != null && @t.@t.levelValue != BsonNull.Value &&
-                                      @t.countValue != null && @t.countValue != BsonNull.Value)
-                                  .Select(@t => new LogLevelInfo
-                                  {
-                                      Level = @t.@t.levelValue.AsString,
-                                      Count = (int)@t.countValue.AsDouble
-                                  })).ToList();
-            return logLevels;
-        }
-
-        private GroupArgs BuildBsonQuery(BsonObjectId fromBsonId, BsonObjectId toBsonId)
-        {
-            var query = Query<LogEntry>.Where(r =>
-                                              r.BsonObjectId >= fromBsonId &&
-                                              r.BsonObjectId <= toBsonId);
-
-            var groupArgs = new GroupArgs
-            {
-                Initial = new BsonDocument(new BsonElement(CountKey, new BsonInt32(0))),
-                KeyFields = new GroupByBuilder(new[] { LevelKey }),
-                ReduceFunction = new BsonJavaScript(
-                    string.Format("function ( curr, result ) {{ result.{0}++; }}", CountKey)),
-                Query = query
-            };
-
-            return groupArgs;
         }
 
         #endregion

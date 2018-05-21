@@ -11,3 +11,6 @@ LogAnalyzer/LogAnalyzer.Web/bin/
 LogAnalyzer/LogAnalyzer.IntegrationTests/obj/
 LogAnalyzer/LogAnalyzer.IntegrationTests/bin/
 LogAnalyzer/LogAnalyzer.Web/App_Data/
+LogAnalyzer/.vs/LogAnalyzer/v15/
+LogAnalyzer/LogAnalyzer.Dal/bin/
+LogAnalyzer/.nuget/

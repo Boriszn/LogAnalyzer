@@ -1,8 +1,10 @@
 using System;
 using System.Threading;
 using LogAnalyzer.Dal;
-using LogAnalyzer.Model.Vm;
+using LogAnalyzer.Model.ViewModel;
+using LogAnalyzer.Web.App_Start;
 using Microsoft.AspNet.SignalR;
+using Ninject;
 
 namespace LogAnalyzer.Web.Controllers
 {
@@ -20,15 +22,18 @@ namespace LogAnalyzer.Web.Controllers
         private Timer broadcastLoop;
         private readonly IHubContext hubContext;
         private NumberOfNewLogItemsViewModel itemsViewModel;
-        private readonly MongoRepository mongoRepository;
+
+        [Inject]
+        public IRepository Repository { get; set; }
 
         public NewLogNumberBroadcaster()
         {
             hubContext = GlobalHost.ConnectionManager.GetHubContext<NewLogsNumberHub>();
             itemsViewModel = new NumberOfNewLogItemsViewModel();
-            
+
+            NinjectWebCommon.Kernel.Inject(this);
             //Create log's (mongo) repository
-            mongoRepository = new MongoRepository();
+            // repository = new MongoRepository();
 
             //Start the broadcast loop
             broadcastLoop = new Timer(
@@ -46,7 +51,7 @@ namespace LogAnalyzer.Web.Controllers
         {
             if (itemsViewModel.CollectionName != null)
             {
-                int count = mongoRepository.GetNumberOfNewItems(itemsViewModel.CollectionName,
+                int count = Repository.GetNumberOfNewItems(itemsViewModel.CollectionName,
                     itemsViewModel.LoadFromId, itemsViewModel.Query, itemsViewModel.LoadFrom, itemsViewModel.LoadTo);
                 
                 if (count != 0)
