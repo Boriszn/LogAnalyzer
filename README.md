@@ -1,20 +1,20 @@
-# LogAnalyzer [![Build status](https://ci.appveyor.com/api/projects/status/q8yuymqhiibd39hw?svg=true)](https://ci.appveyor.com/project/Boriszn/loganalyzer)
+# ![alt text](https://raw.githubusercontent.com/Boriszn/LogAnalyzer/Moving-To-New-MongoDb-Driver/assets/images/Logo.png "Main Dashboard") [![Build status](https://ci.appveyor.com/api/projects/status/q8yuymqhiibd39hw?svg=true)](https://ci.appveyor.com/project/Boriszn/loganalyzer)
 
 Solution provides opportunities for retrieving and analysing log data from NoSQL data bases (MongoDb, CouchDb).
-Includes functions: 
+
+Includes functions:
  - querying/searching data;
  - multidimensional objects rendering;
  - errors/info’s analysing  charts;
  - Real-Time data observing and updating;
 
+![alt text](https://raw.githubusercontent.com/Boriszn/LogAnalyzer/Moving-To-New-MongoDb-Driver/assets/images/Index.png "Main Dashboard")
 
-##Future/To-Do
+## ToDo
 
-- Integration with CouchDB (InProgress)
-- End-To-End test (Protractor.NET)
-- Migration to Angular 2.0
+[Project link](https://github.com/Boriszn/LogAnalyzer/projects/1)
 
-##Stack
+## Stack
 
 Front-End
  - AngularJS, 
