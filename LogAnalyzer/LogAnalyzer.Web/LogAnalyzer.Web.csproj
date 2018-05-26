@@ -273,12 +273,6 @@
     <Content Include="content\fonts\sourcesanspro\sourcesanspro-light.woff" />
     <Content Include="content\fonts\sourcesanspro\sourcesanspro.woff" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="WebTemplate.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </Content>
-  </ItemGroup>
   <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -291,7 +285,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>65080</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
