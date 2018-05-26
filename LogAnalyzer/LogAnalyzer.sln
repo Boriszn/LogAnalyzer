@@ -18,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{DEE972
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogAnalyzer.IntegrationTests", "LogAnalyzer.IntegrationTests\LogAnalyzer.IntegrationTests.csproj", "{64163F5A-B40C-405B-8469-0763DE41867F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{1214D827-F4F8-43A8-B426-8C0C5BCBC195}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1214D827-F4F8-43A8-B426-8C0C5BCBC195}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1214D827-F4F8-43A8-B426-8C0C5BCBC195}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64163F5A-B40C-405B-8469-0763DE41867F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64163F5A-B40C-405B-8469-0763DE41867F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64163F5A-B40C-405B-8469-0763DE41867F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64163F5A-B40C-405B-8469-0763DE41867F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

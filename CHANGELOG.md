@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 
+## unreleased - 15.01.2017
+
+### Added
+- Moving to new MongoDB driver
+-- Add MongoRepositoryV2
+- Add Integration tests
+
 ## unreleased - 18.12.2016
 
 ### Added

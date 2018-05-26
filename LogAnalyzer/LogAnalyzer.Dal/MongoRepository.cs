@@ -28,7 +28,7 @@ namespace LogAnalyzer.Dal
             var client = new MongoClient(connectionString);
             
             var server = client.GetServer();
-            _database = server.GetDatabase(new MongoUrl(connectionString).DatabaseName);
+            _database = server.GetDatabase(/*new MongoUrl(connectionString).DatabaseName*/"LogDb");
 
             //database = client.GetDatabase(new MongoUrl(connectionString).DatabaseName);
         }
@@ -57,11 +57,11 @@ namespace LogAnalyzer.Dal
                     CollectionName = collectionName
                 };
 
-                var collection = _database.GetCollection<LogEntry>(collectionName);
+                MongoCollection<LogEntry> collection = _database.GetCollection<LogEntry>(collectionName);
 
-                logCollection.LastInfo = GetLogLevels(collection
-                    .Group(BuildBsonQuery(fromBsonId, toBsonId))
-                    .ToList());
+                IEnumerable<BsonDocument> group = collection.Group(BuildBsonQuery(fromBsonId, toBsonId));
+
+                logCollection.LastInfo = GetLogLevels(group.ToList());
 
                 result.Add(logCollection);
             }
@@ -93,7 +93,7 @@ namespace LogAnalyzer.Dal
 
         public int GetNumberOfNewItems(string collectionName, string loadFromId, string query, DateTime? loadFrom, DateTime? loadTo)
         {
-            var collection = GetNewItemsCollection(collectionName, loadFromId, query, loadFrom, loadTo);
+            IQueryable<LogEntry> collection = GetNewItemsCollection(collectionName, loadFromId, query, loadFrom, loadTo);
 
             return collection.Count();
         }
@@ -107,7 +107,7 @@ namespace LogAnalyzer.Dal
         public IEnumerable<LogEntry> GetErrors(string collectionName, DateTime? loadFrom, DateTime? loadTo)
         {
             //TODO: temp solution, should be used Agregation framework
-            var collection = _database.GetCollection<LogEntry>(collectionName).AsQueryable();
+            IQueryable<LogEntry> collection = _database.GetCollection<LogEntry>(collectionName).AsQueryable();
 
            /* var command = new CommandDocument
             {

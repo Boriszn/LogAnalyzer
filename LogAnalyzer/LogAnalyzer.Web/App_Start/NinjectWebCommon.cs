@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Web;
 using System.Web.Http;
 using LogAnalyzer.Dal;
@@ -10,12 +11,16 @@ using Ninject.WebApi.DependencyResolver;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(NinjectWebCommon), "Stop")]
-
 namespace LogAnalyzer.Web.App_Start
 {
+    /// <summary>
+    /// IoC configuration
+    /// </summary>
     public static class NinjectWebCommon
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
+
+        public static StandardKernel Kernel;
 
         /// <summary>
         /// Starts the application
@@ -36,6 +41,15 @@ namespace LogAnalyzer.Web.App_Start
         }
 
         /// <summary>
+        /// Load your modules or register your services here!
+        /// </summary>
+        /// <param name="kernel">The kernel.</param>
+        private static void RegisterServices(IKernel kernel)
+        {
+            kernel.Bind<IRepository>().To<MongoRepositoryV2>().InRequestScope();
+        }
+
+        /// <summary>
         /// Creates the kernel that will manage your application.
         /// </summary>
         /// <returns>The created kernel.</returns>
@@ -51,6 +65,8 @@ namespace LogAnalyzer.Web.App_Start
 
                 GlobalConfiguration.Configuration.DependencyResolver = new NinjectDependencyResolver(kernel);
 
+                Kernel = kernel;
+
                 return kernel;
             }
             catch
@@ -58,15 +74,6 @@ namespace LogAnalyzer.Web.App_Start
                 kernel.Dispose();
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Load your modules or register your services here!
-        /// </summary>
-        /// <param name="kernel">The kernel.</param>
-        private static void RegisterServices(IKernel kernel)
-        {
-            kernel.Bind<IRepository>().To<MongoRepository>().InRequestScope();
         }
     }
 }
