@@ -35,6 +35,12 @@ namespace LogAnalyzer.Web.Controllers
         }
 
         // GET api/{collectionName}
+        /// <summary>
+        /// Gets the log by identifier.
+        /// </summary>
+        /// <param name="collectionName">Name of the collection.</param>
+        /// <param name="logId">The log identifier.</param>
+        /// <returns></returns>
         [HttpGet]
         [ResponseType(typeof (object))]
         public IHttpActionResult GetLogById(string collectionName, string logId)
@@ -58,6 +64,15 @@ namespace LogAnalyzer.Web.Controllers
         }
 
         //GET api/{collectionName}
+        /// <summary>
+        /// Gets the logs by query.
+        /// </summary>
+        /// <param name="collectionName">Name of the collection.</param>
+        /// <param name="loadToId">The load to identifier.</param>
+        /// <param name="query">The query.</param>
+        /// <param name="loadFrom">The load from.</param>
+        /// <param name="loadTo">The load to.</param>
+        /// <returns></returns>
         [HttpGet]
         [ResponseType(typeof(LogEntryViewModel))]
         public IHttpActionResult GetLogsByQuery(string collectionName, string loadToId = null, string query = null, DateTime? loadFrom = null, DateTime? loadTo = null)
@@ -73,6 +88,15 @@ namespace LogAnalyzer.Web.Controllers
         }
 
         //GET api/{collectionName}
+        /// <summary>
+        /// Gets the number of new items.
+        /// </summary>
+        /// <param name="collectionName">Name of the collection.</param>
+        /// <param name="loadFromId">The load from identifier.</param>
+        /// <param name="query">The query.</param>
+        /// <param name="loadFrom">The load from.</param>
+        /// <param name="loadTo">The load to.</param>
+        /// <returns></returns>
         [HttpGet]
         [ResponseType(typeof(int))]
         public IHttpActionResult GetNumberOfNewItems(string collectionName, string loadFromId, string query = null, DateTime? loadFrom = null, DateTime? loadTo = null)
@@ -87,6 +111,15 @@ namespace LogAnalyzer.Web.Controllers
         }
 
         //GET api/getNewItems/{collectionName}
+        /// <summary>
+        /// Gets the new items.
+        /// </summary>
+        /// <param name="collectionName">Name of the collection.</param>
+        /// <param name="loadFromId">The load from identifier.</param>
+        /// <param name="query">The query.</param>
+        /// <param name="loadFrom">The load from.</param>
+        /// <param name="loadTo">The load to.</param>
+        /// <returns></returns>
         [HttpGet]
         [ResponseType(typeof(object))]
         public IHttpActionResult GetNewItems(string collectionName, string loadFromId, string query = null, DateTime? loadFrom = null, DateTime? loadTo = null)
@@ -100,16 +133,14 @@ namespace LogAnalyzer.Web.Controllers
                                       .Select(MongoMapper.Map));
         }
 
-        //GET api/environmentInfo
-        [HttpGet]
-        [ResponseType(typeof(string))]
-        public IHttpActionResult GetEnvironmentName()
-        {
-            return Ok(string.Format("{0} v{1}", ConfigurationManager.AppSettings["Environment"].ToUpper(), 
-                ConfigurationManager.AppSettings["Version"].ToUpper()));
-        }
-
         //GET api/getErrorsCount/{collectionName}
+        /// <summary>
+        /// Gets the errors count.
+        /// </summary>
+        /// <param name="collectionName">Name of the collection.</param>
+        /// <param name="loadFrom">The load from.</param>
+        /// <param name="loadTo">The load to.</param>
+        /// <returns></returns>
         [HttpGet]
         [ResponseType(typeof(LogEntryViewModel))]
         public IHttpActionResult GetErrorsCount(string collectionName, DateTime? loadFrom, DateTime? loadTo)

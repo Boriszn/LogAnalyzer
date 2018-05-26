@@ -13,6 +13,9 @@ using Ninject.WebApi.DependencyResolver;
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(NinjectWebCommon), "Stop")]
 namespace LogAnalyzer.Web.App_Start
 {
+    /// <summary>
+    /// IoC configuration
+    /// </summary>
     public static class NinjectWebCommon
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();

@@ -3,16 +3,38 @@
 Solution provides opportunities for retrieving and analysing log data from NoSQL data bases (MongoDb, CouchDb).
 
 Includes functions:
- - querying/searching data;
+ - querying and searching data
  - multidimensional objects rendering;
- - errors/info’s analysing  charts;
+ - errors and info’s analyzing charts;
  - Real-Time data observing and updating;
 
 ![alt text](https://raw.githubusercontent.com/Boriszn/LogAnalyzer/Moving-To-New-MongoDb-Driver/assets/images/Index.png "Main Dashboard")
 
-## ToDo
+## TODO
 
 [Project link](https://github.com/Boriszn/LogAnalyzer/projects/1)
+
+## Data Model
+
+JSON example
+```javascript
+{
+  "Message": "test 2",
+  "Level": "Error",
+  "Name": "Test name",
+  "LastInfo": { /* Can contain ANY object with ANY dimension  */
+    "Level": "Low",
+    "Count": 1,
+    "Stack": {
+      "Test": "one"
+    }
+  },
+  "Email": "none",
+  "VisitDate": "2018-05-21T02:20:00.000+0000"
+}
+```
+
+![alt text](https://raw.githubusercontent.com/Boriszn/LogAnalyzer/Moving-To-New-MongoDb-Driver/assets/images/ErrorList.png "Main Dashboard")
 
 ## Stack
 
@@ -27,4 +49,4 @@ Back-End
 - SignalR,
 
 DB
-- MongoDB, CouchDB
+- MongoDB

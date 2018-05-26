@@ -17,16 +17,6 @@ namespace LogAnalyzer.Web.App_Start
             );
 
             config.Routes.MapHttpRoute(
-                name: "GetEnvironmentNameApi",
-                routeTemplate: "api/environmentInfo",
-                defaults: new
-                {
-                    controller = "LogApi",
-                    action = "GetEnvironmentName",
-                }
-            );
-
-            config.Routes.MapHttpRoute(
                 name: "GetCollectionsApi",
                 routeTemplate: "api/collections",
                 defaults: new

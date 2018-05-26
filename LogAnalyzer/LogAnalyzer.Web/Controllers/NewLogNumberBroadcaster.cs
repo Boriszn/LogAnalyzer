@@ -8,6 +8,10 @@ using Ninject;
 
 namespace LogAnalyzer.Web.Controllers
 {
+    /// <summary>
+    /// Brodcasts / watch for collection new entries count
+    /// and updates 'updateNumberOfNewItems' in new-logs-number-service.js
+    /// </summary>
     public class NewLogNumberBroadcaster
     {
         private static readonly Lazy<NewLogNumberBroadcaster> instance
@@ -23,19 +27,26 @@ namespace LogAnalyzer.Web.Controllers
         private readonly IHubContext hubContext;
         private NumberOfNewLogItemsViewModel itemsViewModel;
 
+        /// <summary>
+        /// Gets or sets the repository.
+        /// </summary>
+        /// <value>
+        /// The repository.
+        /// </value>
         [Inject]
         public IRepository Repository { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NewLogNumberBroadcaster"/> class.
+        /// </summary>
         public NewLogNumberBroadcaster()
         {
+            NinjectWebCommon.Kernel.Inject(this);
+
             hubContext = GlobalHost.ConnectionManager.GetHubContext<NewLogsNumberHub>();
             itemsViewModel = new NumberOfNewLogItemsViewModel();
 
-            NinjectWebCommon.Kernel.Inject(this);
-            //Create log's (mongo) repository
-            // repository = new MongoRepository();
-
-            //Start the broadcast loop
+            // Start the broadcast loop
             broadcastLoop = new Timer(
                 BroadcastNumbers,
                 null,
@@ -56,12 +67,16 @@ namespace LogAnalyzer.Web.Controllers
                 
                 if (count != 0)
                 {
-                    //Update client/executes client lister 'updateNumberOfNewItems' in new-logs-number-service.js
+                    // Update client/executes client lister 'updateNumberOfNewItems' in new-logs-number-service.js
                     hubContext.Clients.All.updateNumberOfNewItems(count);
                 }
             }
         }
 
+        /// <summary>
+        /// Updates the model.
+        /// </summary>
+        /// <param name="clientItemsViewModel">The client items view model.</param>
         public void UpdateModel(NumberOfNewLogItemsViewModel clientItemsViewModel)
         {
             itemsViewModel = clientItemsViewModel;
