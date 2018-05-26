@@ -63,6 +63,3 @@ app.run(function ($rootScope, $modal) {
         };
     });
 });
-
-
-

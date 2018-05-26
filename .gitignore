@@ -8,7 +8,9 @@ LogAnalyzer/LogAnalizer.Model/obj/
 LogAnalyzer/LogAnalizer.UnitTests/obj/
 LogAnalyzer/LogAnalizer.UnitTests/bin/
 LogAnalyzer/LogAnalyzer.Web/bin/
-LogAnalyzer/.vs/
-LogAnalyzer/.nuget/
+LogAnalyzer/LogAnalyzer.IntegrationTests/obj/
+LogAnalyzer/LogAnalyzer.IntegrationTests/bin/
+LogAnalyzer/LogAnalyzer.Web/App_Data/
+LogAnalyzer/.vs/LogAnalyzer/v15/
 LogAnalyzer/LogAnalyzer.Dal/bin/
-LogAnalyzer/LogAnalyzer.Web/LogAnalyzer.Web.csproj.user
+LogAnalyzer/.nuget/

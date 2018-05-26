@@ -1,5 +1,5 @@
 ﻿
-namespace LogAnalyzer.Model.Vm
+namespace LogAnalyzer.Model.ViewModel
 {
     public class LogLevelInfoViewModel
     {
