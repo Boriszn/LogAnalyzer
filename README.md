@@ -34,8 +34,6 @@ JSON example
 }
 ```
 
-## Future/To-Do
-
 ![alt text](https://raw.githubusercontent.com/Boriszn/LogAnalyzer/Moving-To-New-MongoDb-Driver/assets/images/ErrorList.png "Main Dashboard")
 
 ## Stack
